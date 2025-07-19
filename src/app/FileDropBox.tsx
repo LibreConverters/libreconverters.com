@@ -3,7 +3,7 @@ import React from 'react';
 const FileDropBox = () => {
     return (
         <div
-            className="flex flex-col items-center justify-center w-full h-full border-2 border-dashed border-gray-400 rounded text-gray-600"
+            className="flex flex-col items-center justify-center w-full h-full border-2 border-dashed border-gray-400 rounded text-white"
             onDrop={(e) => {
                 e.preventDefault();
                 const files = Array.from(e.dataTransfer.files).filter(

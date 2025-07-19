@@ -31,7 +31,9 @@ export default function Home() {
           <FileDropBox />
         </div>
         <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
+          <div style={{ filter: 'invert(1)' }}>
           <Image src="/convert.svg" alt="converter" width={100} height={100} />
+        </div>
         </div>
         <div style={{ flex: 1}}>
           <SettingsPanel />
