@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Free Image Converter",
-  description: "FREE & open source image converter. No ads, no tracking, no signups.",
+  description: "FREE & Open Source image converter. No ads, no tracking, no signups.",
 };
 
 export default function RootLayout({
