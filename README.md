@@ -26,4 +26,4 @@ $ docker compose up build
 
 ## License
 
-This project is released under the [GNU General Public License v3](LICENSE).
+This project is released under the [GNU Affero General Public License](LICENSE).
