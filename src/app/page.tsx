@@ -30,6 +30,9 @@ export default function Home() {
         <div style={{ flex: 1, marginRight: '20px' }}>
           <FileDropBox />
         </div>
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
+          <Image src="/convert.svg" alt="converter" width={100} height={100} />
+        </div>
         <div style={{ flex: 1}}>
           <SettingsPanel />
         </div>
