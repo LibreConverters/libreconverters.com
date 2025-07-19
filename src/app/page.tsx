@@ -15,6 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+'use client'
+
 import Image from "next/image";
 import FileDropBox from "./FileDropBox";
 import SettingsPanel from "./SettingsPanel";
