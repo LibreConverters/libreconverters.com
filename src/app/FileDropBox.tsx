@@ -15,7 +15,7 @@ const FileDropBox = () => {
             >
             
             {/* Drag and drop area text */}
-            <div className="flex items-center justify-center h-full">
+            <div className="flex items-center justify-center text-center h-full px-5 py-2">
                 Drag and drop files here or click to select files
             </div>
             
