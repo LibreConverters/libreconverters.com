@@ -27,26 +27,51 @@ export default function Home() {
       
       {/* Top Row: Split into two columns */}
       <div style={{ flex: 1, display: 'flex', marginBottom: '20px' }}>
-        <div style={{ flex: 1, marginRight: '20px' }}>
+
+        {/* AdSense ad */}
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          {/* AdSense ad will go here */}
+        </div>
+
+        {/* File Drop Box */}
+        <div style={{ flex: 1 }}>
           <FileDropBox />
         </div>
+
+        {/* Converter icon */}
         <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
           <div style={{ filter: 'invert(1)' }}>
-          <Image src="/convert.svg" alt="converter" width={100} height={100} />
+            <Image src="/convert.svg" alt="converter" width={100} height={100} />
+          </div>
         </div>
-        </div>
+
+        {/* Settings panel */}
         <div style={{ flex: 1}}>
           <SettingsPanel />
         </div>
+
+        {/* AdSense ad */}
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          {/* AdSense ad will go here */}
+        </div>
       </div>
       
+
       {/* Bottom Row: Convert Button */}
-      <div className="flex justify-center">
+      <div className="flex justify-center items-center gap-4" style={{ marginTop: '20px' }}>
         <button
           // onClick={handleConvert}
-          className="rounded-full border border-transparent transition-colors flex items-center justify-center bg-green-500 text-white gap-2 hover:bg-green-600 dark:hover:bg-green-400 font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
+          className="rounded-full border border-transparent transition-colors flex items-center justify-center bg-green-500 text-white gap-2 hover:bg-green-600 dark:hover:bg-green-400 font-medium text-sm sm:text-base h-12 px-5 w-[150px]"
         >
           Convert
+        </button>
+
+        <button
+          disabled
+          // onClick={handleDownload}
+          className="rounded-full border border-transparent transition-colors flex items-center justify-center bg-green-500 text-white gap-2 hover:bg-green-600 dark:hover:bg-green-400 font-medium text-sm sm:text-base h-12 px-5 w-[150px] opacity-50 cursor-not-allowed"
+        >
+          Download
         </button>
       </div>
 
