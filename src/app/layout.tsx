@@ -31,7 +31,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Free Image Converter",
-  description: "FREE & Open Source image converter. No ads, no tracking, no signups.",
+  description: "FREE & Open Source image converter. No intrusive ads, no tracking, no signups.",
 };
 
 export default function RootLayout({
@@ -44,7 +44,22 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <nav className="flex justify-between items-center p-2 " style={{ zIndex: 9999, position: 'fixed', top: 0, left: 0, right: 0, backgroundColor: '#333', color: '#fff' }}>
+          <div>
+            <a href="/">
+              <h1 className="text-2xl font-bold">Libre Converters</h1>
+            </a>
+          </div>
+          <div className="flex space-x-4">
+            <a href="/image-converter">Image Converter</a>
+            <a href="/about">About</a>
+            <a href="https://github.com/libreconverters/libreconverters.com">GitHub</a>
+          </div>
+        </nav>
+
+        <main className="flex flex-col h-screen" style={{ paddingTop: '50px' }}>
+          {children}
+        </main>
       </body>
     </html>
   );

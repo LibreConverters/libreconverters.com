@@ -3,7 +3,8 @@ import React from 'react';
 const FileDropBox = () => {
     return (
         <div
-            className="flex flex-col items-center justify-center w-full h-full border-2 border-dashed border-gray-400 rounded text-white"
+            style={{ backgroundColor: '#2f3640' }}
+            className="flex flex-col items-center justify-center w-full h-[80%] border-2 border-dashed border-gray-400 rounded text-white "
             onDrop={(e) => {
                 e.preventDefault();
                 const files = Array.from(e.dataTransfer.files).filter(
@@ -15,8 +16,8 @@ const FileDropBox = () => {
             >
             
             {/* Drag and drop area text */}
-            <div className="flex items-center justify-center text-center h-full px-5 py-2">
-                Drag and drop files here or click to select files
+            <div className="flex items-center justify-center text-center text-sm px-5 py-2">
+                Drag and drop files here or click to select files...
             </div>
             
 
@@ -38,7 +39,7 @@ const FileDropBox = () => {
                         input.click();
                         }}
                     >
-                        Select files...
+                        Select files
                     </button>
                 </div>
             </div>

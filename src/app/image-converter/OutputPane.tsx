@@ -15,16 +15,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-'use client'
-
-import Image from "next/image";
-
-
-export default function Home() {
-  return (
-    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', padding: '20px', boxSizing: 'border-box' }}>
-      
-
-    </div>
-  );
-}
+export default function OutputPane() {
+    return (
+        <div 
+        style={{ backgroundColor: '#2f3640' }}
+        className="flex flex-col items-center justify-center w-full h-[80%] border-2 border-gray-400 rounded text-white">
+            <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
+                <p className="text-sm">No files converted yet.</p>
+                {/* Placeholder for output files */}
+                </div>
+            </div>
+        </div>
+    );
+    }
