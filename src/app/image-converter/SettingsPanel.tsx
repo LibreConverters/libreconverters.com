@@ -33,10 +33,10 @@ const SettingsPanel = () => {
             id="outputFormat"
             className="bg-white text-black border border-gray-400 rounded px-2 py-1"
           >
+            <option value="gif">AVIF</option>
             <option value="png">PNG</option>
             <option value="jpeg">JPEG</option>
             <option value="webp">WEBP</option>
-            <option value="gif">AVIF</option>
           </select>
         </div>
 
@@ -91,17 +91,24 @@ const SettingsPanel = () => {
       <div className="flex flex-col gap-4 mt-4 items-center justify-center">
         <button
           // onClick={handleConvert}
-          className="rounded-full border border-transparent transition-colors flex items-center justify-center bg-blue-500 text-white gap-2 hover:bg-blue-600 dark:hover:bg-green-400 font-medium text-sm sm:text-base h-12 px-5 w-[150px]"
+          className="rounded-full border border-transparent transition-colors flex items-center justify-center bg-blue-500 text-white gap-2 hover:bg-blue-600 dark:hover:bg-blue-400 font-medium text-sm sm:text-base h-12 px-5 w-[150px]"
         >
           Convert
         </button>
 
-        <button
+        {/* <button
           disabled
           // onClick={handleDownload}
           className="rounded-full border border-transparent transition-colors flex items-center justify-center bg-green-500 text-white gap-2 hover:bg-green-600 dark:hover:bg-green-400 font-medium text-sm sm:text-base h-12 px-5 w-[150px] opacity-50 cursor-not-allowed"
         >
           Download
+        </button> */}
+
+        <button
+          onClick={() => window.location.reload()}
+          className="rounded-full border border-transparent transition-colors flex items-center justify-center bg-red-500 text-white gap-2 hover:bg-red-600 dark:hover:bg-red-400 font-medium text-sm sm:text-base h-12 px-5 w-[150px]"
+        >
+          Reset
         </button>
       </div>
 
