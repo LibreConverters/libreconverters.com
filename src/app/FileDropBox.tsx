@@ -4,7 +4,7 @@ const FileDropBox = () => {
     return (
         <div
             style={{ backgroundColor: '#2f3640' }}
-            className="flex flex-col items-center justify-center w-full h-[80%] border-2 border-dashed border-gray-400 rounded text-white "
+            className="flex flex-col items-center justify-center w-full h-[60%] border-2 border-dashed border-gray-400 rounded text-white "
             onDrop={(e) => {
                 e.preventDefault();
                 const files = Array.from(e.dataTransfer.files).filter(
