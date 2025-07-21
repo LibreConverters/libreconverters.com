@@ -18,7 +18,7 @@
 'use client'
 
 import Image from "next/image";
-import FileDropBox from "../FileDropBox";
+import FileDropBox from "./FileDropBox";
 import SettingsPanel from "./SettingsPanel";
 import OutputPane from "./OutputPane";
 
