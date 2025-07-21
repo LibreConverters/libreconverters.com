@@ -49,9 +49,9 @@ const SettingsPanel = () => {
             id="compression"
             className="bg-white text-black border border-gray-400 rounded px-2 py-1"
           >
-            <option value="none">None</option>
             <option value="lossless">Lossless</option>
             <option value="lossy">Lossy</option>
+            <option value="none">None</option>
           </select>
         </div>
 
