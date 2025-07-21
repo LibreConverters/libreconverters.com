@@ -18,6 +18,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +32,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Free Image Converter",
-  description: "FREE & Open Source image converter. No intrusive ads, no tracking, no signups.",
+  description: "FREE & Open Source image converter. No intrusive ads, no signups, no usage limits!",
 };
 
 export default function RootLayout({
@@ -42,7 +43,25 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Google Adsense */}
         <meta name="google-adsense-account" content="ca-pub-9181884142549970"/>
+
+        {/* Google Analytics Tag */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-FZQF1CPQEE"
+          strategy="afterInteractive"
+          async
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-FZQF1CPQEE');
+          `}
+        </Script>
+        {/* End Google Analytics Tag */}
+
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
