@@ -66,14 +66,6 @@ const SettingsPanel = () => {
           Convert
         </button>
 
-        {/* <button
-          disabled
-          // onClick={handleDownload}
-          className="rounded-full border border-transparent transition-colors flex items-center justify-center bg-green-500 text-white gap-2 hover:bg-green-600 dark:hover:bg-green-400 font-medium text-sm sm:text-base h-12 px-5 w-[150px] opacity-50 cursor-not-allowed"
-        >
-          Download
-        </button> */}
-
         <button
           onClick={() => window.location.reload()}
           className="rounded-full border border-transparent transition-colors flex items-center justify-center bg-red-500 text-white gap-2 hover:bg-red-600 dark:hover:bg-red-400 font-medium text-sm sm:text-base h-12 px-5 w-[150px]"
