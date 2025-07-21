@@ -20,9 +20,12 @@ export type ImageFile = {
   file: File;
 };
 
+type FileChangeListener = (files: ImageFile[]) => void;
+
 export class FileHandler {
   private static instance: FileHandler;
   private files: ImageFile[] = [];
+   private listeners: Set<FileChangeListener> = new Set();
 
   private constructor() {}
 
@@ -38,12 +41,14 @@ export class FileHandler {
   public addFile(file: File): void {
     this.files.push({ id: crypto.randomUUID(), file });
     console.log(`File added: ${file.name}`);
+    this.notifyListeners();
   }
 
   /** Remove a file by its unique ID */
   public removeFile(id: string): void {
     this.files = this.files.filter((file) => file.id !== id);
     console.log(`File removed: ${id}`);
+    this.notifyListeners();
   }
 
   /** Get all image files */
@@ -55,6 +60,24 @@ export class FileHandler {
   public clearFiles(): void {
     this.files = [];
     console.log('All files cleared');
+  }
+
+  public subscribe(listener: FileChangeListener): () => void {
+        this.listeners.add(listener);
+        // Immediately send current state
+        listener(this.files);
+
+        // Return unsubscribe function
+        return () => {
+            this.listeners.delete(listener);
+        };
+    }
+
+    private notifyListeners(): void {
+      const clonedFiles = [...this.files]; // Shallow copy to force React updates
+      for (const listener of this.listeners) {
+          listener(clonedFiles);
+      }
   }
 }
 
