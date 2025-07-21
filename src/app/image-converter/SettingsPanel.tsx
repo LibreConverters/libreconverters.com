@@ -19,7 +19,7 @@ import React from 'react';
 
 const SettingsPanel = () => {
   return (
-    <div className="flex flex-col justify-between h-full w-[200px] rounded text-white p-5">
+    <div className="flex flex-col justify-center h-full w-[200px] rounded text-white p-5">
       
       {/* Top: Settings list */}
       <div className="flex flex-col gap-4 items-center justify-center">
@@ -58,7 +58,8 @@ const SettingsPanel = () => {
       </div>
 
       {/* Buttons */}
-      <div className="flex flex-col gap-4 mt-4 items-center justify-center">
+      <div className="flex flex-col gap-4 mt-10 items-center justify-center">
+        
         <button
           // onClick={handleConvert}
           className="rounded-full border border-transparent transition-colors flex items-center justify-center bg-blue-500 text-white gap-2 hover:bg-blue-600 dark:hover:bg-blue-400 font-medium text-sm sm:text-base h-12 px-5 w-[150px]"
