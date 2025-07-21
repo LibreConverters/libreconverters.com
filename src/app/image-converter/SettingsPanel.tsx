@@ -60,6 +60,7 @@ const SettingsPanel = () => {
       {/* Buttons */}
       <div className="flex flex-col gap-4 mt-10 items-center justify-center">
         
+        {/* Convert button */}
         <button
           // onClick={handleConvert}
           className="rounded-full border border-transparent transition-colors flex items-center justify-center bg-blue-500 text-white gap-2 hover:bg-blue-600 dark:hover:bg-blue-400 font-medium text-sm sm:text-base h-12 px-5 w-[150px]"
@@ -67,6 +68,7 @@ const SettingsPanel = () => {
           Convert
         </button>
 
+        {/* Reset button */}
         <button
           onClick={() => window.location.reload()}
           className="rounded-full border border-transparent transition-colors flex items-center justify-center bg-red-500 text-white gap-2 hover:bg-red-600 dark:hover:bg-red-400 font-medium text-sm sm:text-base h-12 px-5 w-[150px]"
