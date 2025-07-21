@@ -22,7 +22,7 @@ export default function OutputPane() {
         className="flex flex-col items-center justify-center w-full h-[80%] border-2 border-gray-400 rounded text-white">
             <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2">
-                <p className="text-sm">No files converted yet.</p>
+                <p className="text-sm">No files uploaded yet.</p>
                 {/* Placeholder for output files */}
                 </div>
             </div>
