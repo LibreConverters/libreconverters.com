@@ -32,7 +32,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Free Image Converter",
-  description: "FREE & Open Source image converter. No intrusive ads, no tracking, no signups.",
+  description: "FREE & Open Source image converter. No intrusive ads, no signups, no usage limits!",
 };
 
 export default function RootLayout({
@@ -61,7 +61,7 @@ export default function RootLayout({
           `}
         </Script>
         {/* End Google Analytics Tag */}
-        
+
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

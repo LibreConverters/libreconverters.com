@@ -1,6 +1,6 @@
 libreconverters.com is a suite of free and open source converter tools.
 
-These converters are funded entirely by ads. Never pay for usage, no tracking, no signups, no limits, no intrusive ads. EVER!
+These converters are funded entirely by ads. Never pay for usage, no signups, no limits, no intrusive ads. EVER!
 
 ## Getting Started
 
