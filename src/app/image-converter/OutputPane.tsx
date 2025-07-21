@@ -28,4 +28,5 @@ export default function OutputPane() {
             </div>
         </div>
     );
-    }
+}
+
