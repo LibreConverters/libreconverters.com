@@ -55,36 +55,6 @@ const SettingsPanel = () => {
           </select>
         </div>
 
-
-        {/* Image Quality */}
-        <div className="flex flex-col gap-2 w-full">
-          <label className="text-sm font-semibold" htmlFor="imageQuality">
-            Image Quality
-          </label>
-          <select
-            id="imageQuality"
-            className="bg-white text-black border border-gray-400 rounded px-2 py-1"
-          >
-            <option value="1">Low</option>
-            <option value="5">Medium</option>
-            <option value="10">High</option>
-          </select>
-        </div>
-
-        {/* Resize Options */}
-        <div className="flex flex-col gap-2 w-full">
-          <label className="text-sm font-semibold" htmlFor="resizeOptions">
-            Resize Options
-          </label>
-          <select
-            id="resizeOptions"
-            className="bg-white text-black border border-gray-400 rounded px-2 py-1"
-          >
-            <option value="none">None</option>
-            <option value="contain">Contain</option>
-            <option value="cover">Cover</option>
-          </select>
-        </div>
       </div>
 
       {/* Buttons */}
