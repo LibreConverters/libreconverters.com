@@ -1,6 +1,6 @@
-freeimageconverter.app is a free and open source image converter.
+libreconverters.com is a suite of free and open source converter tools.
 
-This converter is funded entirely by ads. Never pay for usage, no tracking, no signups, no limits. EVER!
+These converters are funded entirely by ads. Never pay for usage, no tracking, no signups, no limits, no intrusive ads. EVER!
 
 ## Getting Started
 
