@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import React from 'react';
-
-type ImageFile = {
+export type ImageFile = {
   id: string;
   file: File;
 };
@@ -28,6 +26,7 @@ export class FileHandler {
 
   private constructor() {}
 
+  /** Singleton accessor */
   public static getInstance(): FileHandler {
     if (!FileHandler.instance) {
       FileHandler.instance = new FileHandler();
@@ -35,28 +34,28 @@ export class FileHandler {
     return FileHandler.instance;
   }
 
+  /** Add a new image file */
   public addFile(file: File): void {
     this.files.push({ id: crypto.randomUUID(), file });
     console.log(`File added: ${file.name}`);
   }
 
+  /** Remove a file by its unique ID */
   public removeFile(id: string): void {
     this.files = this.files.filter((file) => file.id !== id);
+    console.log(`File removed: ${id}`);
   }
 
+  /** Get all image files */
   public getFiles(): ImageFile[] {
     return this.files;
   }
+
+  /** Clear all files */
+  public clearFiles(): void {
+    this.files = [];
+    console.log('All files cleared');
+  }
 }
 
-// Create and export the FileContext
-export const FileContext = React.createContext<FileHandler | null>(null);
-
-export const FileProvider = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <FileContext.Provider value={FileHandler.getInstance()}>
-      {children}
-    </FileContext.Provider>
-  );
-};
-
+export default FileHandler;

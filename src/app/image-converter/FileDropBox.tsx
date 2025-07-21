@@ -1,5 +1,5 @@
 import React, { useRef, ChangeEvent } from 'react';
-import { FileHandler } from './FileHandler';
+import FileHandler from './FileHandler';
 
 const FileDropBox: React.FC = () => {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
