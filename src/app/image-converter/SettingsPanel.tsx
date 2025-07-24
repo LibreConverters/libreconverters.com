@@ -16,6 +16,8 @@
  */
 
 import React from 'react';
+import { processImages } from './Converter';
+import FileHandler from './FileHandler';
 
 const SettingsPanel = () => {
   return (
@@ -70,7 +72,14 @@ const SettingsPanel = () => {
         
         {/* Convert button */}
         <button
-          // onClick={handleConvert}
+          onClick={() => {
+            const compression = Number((document.getElementById('compression') as HTMLSelectElement)?.value);
+            processImages(
+              compression,
+              FileHandler.getInstance().getFiles(),
+              'avif'
+            ).then();
+          }}
           className="rounded-full border border-transparent transition-colors flex items-center justify-center bg-blue-500 text-white gap-2 hover:bg-blue-600 dark:hover:bg-blue-400 font-medium text-sm sm:text-base h-12 px-5 w-[150px]"
         >
           Convert
