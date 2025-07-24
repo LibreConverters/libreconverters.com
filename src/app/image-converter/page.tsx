@@ -19,7 +19,8 @@
 
 import Image from "next/image";
 import FileDropBox from "./FileDropBox";
-import SettingsPanel from "./SettingsPanel";
+import dynamic from 'next/dynamic';
+const SettingsPanel = dynamic(() => import('./SettingsPanel'), { ssr: false });
 import OutputPane from "./OutputPane";
 
 export default function Home() {
