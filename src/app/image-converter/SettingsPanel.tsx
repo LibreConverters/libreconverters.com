@@ -35,10 +35,12 @@ const SettingsPanel = () => {
             id="outputFormat"
             className="bg-white text-black border border-gray-400 rounded px-2 py-1"
           >
-            <option value="gif">AVIF</option>
-            <option value="png">PNG</option>
+            <option value="avif">AVIF</option>
             <option value="jpeg">JPEG</option>
+            <option value="png">PNG</option>
             <option value="webp">WEBP</option>
+            <option value="gif">GIF (static only)</option>
+            <option value="ico">ICO</option>
           </select>
         </div>
 
