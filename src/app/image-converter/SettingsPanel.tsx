@@ -49,9 +49,17 @@ const SettingsPanel = () => {
             id="compression"
             className="bg-white text-black border border-gray-400 rounded px-2 py-1"
           >
-            <option value="lossless">Lossless</option>
-            <option value="lossy">Lossy</option>
-            <option value="none">None</option>
+            <option value="0" selected>0 (None)</option>
+            <option value="10">10 (Minimal)</option>
+            <option value="20">20 (Light)</option>
+            <option value="30">30 (Mild)</option>
+            <option value="40">40 (Balanced)</option>
+            <option value="50">50 (Standard)</option>
+            <option value="60">60 (Moderate)</option>
+            <option value="70">70 (Strong)</option>
+            <option value="80">80 (High)</option>
+            <option value="90">90 (Max Save)</option>
+            <option value="100">100 (Smallest File)</option>
           </select>
         </div>
 
