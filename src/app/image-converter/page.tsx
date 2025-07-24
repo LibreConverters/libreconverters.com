@@ -85,9 +85,7 @@ export default function Home() {
                 <SettingsPanel />
             </div>
         </div>
-        
       </div>
-
     </div>
   );
 }
