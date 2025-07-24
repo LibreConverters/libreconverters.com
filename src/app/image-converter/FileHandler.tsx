@@ -52,8 +52,8 @@ export class FileHandler {
   }
 
   /** Get all image files */
-  public getFiles(): ImageFile[] {
-    return this.files;
+  public getFiles(): File[] {
+    return this.files.map((file) => file.file);
   }
 
   /** Clear all files */
