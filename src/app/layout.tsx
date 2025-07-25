@@ -69,7 +69,6 @@ export default function RootLayout({
           </div>
           <div className="flex space-x-4">
             <a href="/image-converter">Image Converter</a>
-            <a href="/about">About</a>
             <a href="https://github.com/libreconverters/libreconverters.com">GitHub</a>
           </div>
         </nav>
