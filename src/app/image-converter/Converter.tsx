@@ -18,91 +18,175 @@
 import { avif, jxl, jpeg, png, qoi, webp, heic, wp2 } from "icodec";
 import JSZip from "jszip";
 
+type InputFormat =  'jpeg' | 'png' | 'webp' | 'avif' | 'jxl' | 'qoi' | 'heic' | 'wp2';
 type OutputFormat = 'jpeg' | 'png' | 'webp' | 'avif' | 'jxl' | 'qoi' | 'heic' | 'wp2';
 
 // Map of format name to codec module
 const modules: Record<string, any> = { avif, jxl, jpeg, png, qoi, webp, heic, wp2 };
 
+async function getFileExtension(file: File): Promise<string> {
+  const ext = file.name.split('.').pop()?.toLowerCase() || "";
+  return ext;
+}
+
+async function lookupFileFormat(file: File): Promise<InputFormat> {
+  const ext = await getFileExtension(file);
+
+  switch (ext) {
+    case "jpg":
+    case "jpeg": 
+      return "jpeg";
+    case "png":
+      return "png"; 
+    case "webp":
+      return "webp";
+    case "avif":
+      return "avif";
+    case "jxl":
+      return "jxl";
+    case "qoi":
+      return "qoi";
+    case "heif": 
+    case "heic":
+      return "heic";
+    case "wp2":
+      return "wp2";
+    default:
+      throw new Error(`Unsupported file format: ${ext}`);
+  }
+}
+
+
+async function loadDecoders(images: File[]): Promise<void> {
+  const formats = new Set<InputFormat>();
+  
+  for (const image of images) {
+    const format = await lookupFileFormat(image);
+    formats.add(format);
+  }
+  
+  const promises = Array.from(formats).map(async (format) => {
+    if (modules[format]) {
+      console.log(`Loading decoder for ${format}`);
+      await modules[format].loadDecoder();
+    } 
+    
+    else {
+      throw new Error(`Unsupported input format: ${format}`);
+    }
+  });
+  
+  await Promise.all(promises);
+}
+
+async function loadEncoders(formats: OutputFormat[]): Promise<void> {
+  const encoderPromises = formats.map(async (format) => {
+    if (modules[format]) {
+      console.log(`Loading encoder for ${format}`);
+      await modules[format].loadEncoder();
+    } else {
+      throw new Error(`Unsupported output format: ${format}`);
+    }
+  });
+  
+  await Promise.all(encoderPromises);
+}
+
 async function decodeImage(file: File): Promise<ImageData> {
   const ext = file.name.split('.').pop()?.toLowerCase() || "";
-  let decoded: any;
+  let codec: any;
+
   switch (ext) {
-    case "jpg":   case "jpeg": decoded = jpeg.decode(new Uint8Array(await file.arrayBuffer())); break;
-    case "png":   decoded = png.decode(new Uint8Array(await file.arrayBuffer())); break;
-    case "webp":  decoded = webp.decode(new Uint8Array(await file.arrayBuffer())); break;
-    case "avif":  decoded = avif.decode(new Uint8Array(await file.arrayBuffer())); break;
-    case "jxl":   decoded = jxl.decode(new Uint8Array(await file.arrayBuffer())); break;
-    case "qoi":   decoded = qoi.decode(new Uint8Array(await file.arrayBuffer())); break;
-    case "heic": 
-    case "heif":  decoded = heic.decode(new Uint8Array(await file.arrayBuffer())); break;
-    case "wp2":   decoded = wp2.decode(new Uint8Array(await file.arrayBuffer())); break;
-    default:      throw new Error(`Unsupported file format: ${ext}`);
+    case "jpg":
+    case "jpeg": 
+      codec = jpeg;
+      break;
+    case "png":
+      codec = png;
+      break;
+    case "webp":
+      codec = webp;
+      break;
+    case "avif":
+      codec = avif;
+      break;
+    case "jxl":
+      codec = jxl;
+      break;
+    case "qoi":
+      codec = qoi;
+      break;
+    case "heif": 
+    case "heic":
+      codec = heic;
+      break;
+    case "wp2":
+      codec = wp2;
+      break;
+    default:
+      throw new Error(`Unsupported file format: ${ext}`);
   }
-  // Ensure colorSpace property exists for ImageData compatibility
-  return {
-    ...decoded,
-    colorSpace: decoded.colorSpace ?? "srgb"
-  } as ImageData;
+
+  console.log(`Decoding image: ${file.name} with codec: ${codec.name}`);
+  const imageData = codec.decode(new Uint8Array(await file.arrayBuffer()));
+  return imageData;
 }
 
 async function encodeImage(imageData: ImageData, format: OutputFormat, compression: number): Promise<Uint8Array> {
-  // Ensure ImageDataLike compatibility
-  const imageDataLike = {
-    ...imageData,
-    depth: (imageData as any).depth ?? 8 // Default to 8 if not present
-  };
-  let encoded: Uint8Array;
+  let codec: any;
+  let args: any = {};
+
+  // Select codec and arguments based on output format
   switch (format) {
     case "jpeg":
-      encoded = jpeg.encode(imageDataLike, { quality: compression });
+      codec = jpeg;
+      args = { quality: compression };
       break;
     case "png":
-      encoded = png.encode(imageDataLike);
+      codec = png;
+      args = { quality: compression };
       break;
     case "webp":
-      encoded = webp.encode(imageDataLike, { quality: compression });
+      codec = webp;
+      args = { quality: compression };
       break;
     case "avif":
-      encoded = avif.encode(imageDataLike, { quality: compression });
+      codec = avif;
+      args = { cqLevel: Math.round((100 - compression) / 5) };
       break;
     case "jxl":
-      encoded = jxl.encode(imageDataLike, { quality: compression });
+      codec = jxl;
+      args = { quality: compression };
       break;
     case "qoi":
-      encoded = qoi.encode(imageDataLike);
+      codec = qoi;
+      args = { quality: compression };
       break;
     case "heic": 
-      encoded = heic.encode(imageDataLike);
+      codec = heic;
+      args = { quality: compression };
       break;
     case "wp2":
-      encoded = wp2.encode(imageDataLike);
+      codec = wp2;
+      args = { quality: compression };
       break;
     default:
       throw new Error(`Unsupported output format: ${format}`);
   }
-  return encoded;
-}
-
-export async function convertImages(
-  compression: number,
-  images: File[],
-  output_format: 'jpeg'|'png'|'webp'|'avif'|'jxl'|'qoi'|'heic'|'wp2'
-): Promise<{ convertedImages?: { name: string; data: Uint8Array }[]; error?: string }> {
-  try {
-    // Process all images in parallel
-    const convertedImages = await Promise.all(
-      images.map(async (file) => {
-        const imageData = await decodeImage(file);
-        const encodedData = await encodeImage(imageData, output_format, compression);
-        return { name: file.name.replace(/\.[^/.]+$/, `.${output_format}`), data: encodedData };
-      })
-    );
-    return { convertedImages };
-  } catch (error) {
-    console.error("Error converting images:", error);
-    return { error: error instanceof Error ? error.message : "Unknown error" };
+  
+  console.log(`Encoding image to ${format} with compression ${compression}`);
+  const encoded = await codec.encode(imageData, args);
+  
+  if (encoded instanceof Uint8Array) {
+    console.log(`Encoded image size: ${encoded.length} bytes`);
+    return encoded;
+  } 
+  
+  else {
+    throw new Error(`Encoding failed for format: ${format}`);
   }
 }
+
 
 // zipImages and processImages remain the same as before.
 export async function zipImages(images: { name: string; data: Uint8Array }[]): Promise<Blob> {
@@ -124,16 +208,28 @@ export async function zipImages(images: { name: string; data: Uint8Array }[]): P
  * @param output_format - Output format to convert to (e.g. "jpeg", "png", etc.).
  * @returns A blob containing the zipped images, or null if there was an error.
  */
-export async function processImages(
-  compression: number,
-  images: File[],
-  output_format: string
-): Promise<Blob | null> {
-  const result = await convertImages(compression, images, output_format as any);
-  if (result.error || !result.convertedImages) return null;
+export async function processImages(compression: number, images: File[], output_format: OutputFormat): Promise<Blob | null> {
   try {
-    return await zipImages(result.convertedImages);
-  } catch {
-    return null;
+    // Load decoders for input formats
+    await loadDecoders(images);
+
+    // Load encoders for the output format
+    await loadEncoders([output_format]);
+
+    // Process all images in parallel
+    const convertedImages = await Promise.all(
+      images.map(async (file) => {
+        const imageData = await decodeImage(file);
+        const encodedData = await encodeImage(imageData, output_format, compression);
+        return { name: file.name.replace(/\.[^/.]+$/, `.${output_format}`), data: encodedData };
+      })
+    );
+
+    return await zipImages(convertedImages);
+  }
+  
+  catch (error) {
+      console.error("Error converting images:", error);
+      return null;
   }
 }
