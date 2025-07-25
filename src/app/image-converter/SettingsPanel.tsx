@@ -76,11 +76,10 @@ const SettingsPanel = () => {
         <button
           onClick={() => {
             const compression = Number((document.getElementById('compression') as HTMLSelectElement)?.value);
-            processImages(
-              compression,
-              FileHandler.getInstance().getFiles(),
-              (document.getElementById('outputFormat') as HTMLSelectElement)?.value
-            ).then();
+            const outputFormat = (document.getElementById('outputFormat') as HTMLSelectElement)?.value as 'jpeg'|'png'|'webp'|'avif'|'jxl'|'qoi'|'heic'|'wp2';
+            const files = FileHandler.getInstance().getFiles();
+            
+            processImages(compression, files, outputFormat).then();
           }}
           className="rounded-full border border-transparent transition-colors flex items-center justify-center bg-blue-500 text-white gap-2 hover:bg-blue-600 dark:hover:bg-blue-400 font-medium text-sm sm:text-base h-12 px-5 w-[150px]"
         >
