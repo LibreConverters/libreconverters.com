@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { processImages } from './Converter';
 import FileHandler from './FileHandler';
 
@@ -71,30 +71,97 @@ const SettingsPanel = () => {
 
       {/* Buttons */}
       <div className="flex flex-col gap-4 mt-10 items-center justify-center">
-        
-        {/* Convert button */}
-        <button
-          onClick={() => {
+
+        {/* Button logic */}
+        {(() => {
+          const [isConverting, setIsConverting] = React.useState(false);
+          const [convertedImages, setConvertedImages] = React.useState<any>(null);
+          const [files, setFiles] = React.useState<File[]>([]);
+
+          // Subscribe to image files
+          useEffect(() => {
+            const unsubscribe = FileHandler.getInstance().subscribe((imageFiles) => {
+              const files = imageFiles.map((imageFile) => imageFile.file);
+              setFiles(files);
+            });
+            return unsubscribe; // Cleanup on unmount
+          }, []);
+
+          // Handle conversion of images
+          const handleConvert = async () => {
+            setIsConverting(true);
+            setConvertedImages(null);
+
             const compression = Number((document.getElementById('compression') as HTMLSelectElement)?.value);
             const outputFormat = (document.getElementById('outputFormat') as HTMLSelectElement)?.value as 'jpeg'|'png'|'webp'|'avif'|'jxl'|'qoi'|'heic'|'wp2';
-            const files = FileHandler.getInstance().getFiles();
-            
-            processImages(compression, files, outputFormat).then();
-          }}
-          className="rounded-full border border-transparent transition-colors flex items-center justify-center bg-blue-500 text-white gap-2 hover:bg-blue-600 dark:hover:bg-blue-400 font-medium text-sm sm:text-base h-12 px-5 w-[150px]"
-        >
-          Convert
-        </button>
 
-        {/* Reset button */}
-        <button
-          onClick={() => window.location.reload()}
-          className="rounded-full border border-transparent transition-colors flex items-center justify-center bg-red-500 text-white gap-2 hover:bg-red-600 dark:hover:bg-red-400 font-medium text-sm sm:text-base h-12 px-5 w-[150px]"
-        >
-          Reset
-        </button>
+            // processImages may be async, so handle both cases
+            const result = await Promise.resolve(processImages(compression, files, outputFormat));
+            setConvertedImages(result);
+            setIsConverting(false);
+          };
+
+          // Handle download of converted images
+          const handleDownload = () => {
+            if (convertedImages) {
+              const url = URL.createObjectURL(convertedImages);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = 'converted_images.zip';
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+              URL.revokeObjectURL(url);
+            }
+          };
+
+          // Handle reset of state
+          const handleReset = () => {
+            setFiles([]);
+            setConvertedImages(null);
+            setIsConverting(false);
+          };
+
+          // Button rendering
+          return (
+        <>
+            {/* Convert button, only enabled if there are files uploaded to convert */}
+            <button
+              onClick={handleConvert}
+              disabled={isConverting || !files.length}
+              className={`rounded-full border border-transparent transition-colors flex items-center justify-center gap-2 font-medium text-sm sm:text-base h-12 px-5 w-[150px] ${
+                isConverting || !files.length
+                  ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
+                  : 'bg-blue-500 text-white hover:bg-blue-600 dark:hover:bg-blue-400'
+              }`}
+            >
+              {isConverting ? 'Converting...' : 'Convert'}
+            </button>
+
+            {/* Download button, only enabled if convertedImages is not null */}
+            <button
+                onClick={handleDownload}
+                className={`rounded-full border border-transparent transition-colors flex items-center justify-center gap-2 font-medium text-sm sm:text-base h-12 px-5 w-[150px] ${
+                !convertedImages || !files.length
+                  ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
+                  : 'bg-green-500 text-white hover:bg-green-600 dark:hover:bg-green-400'
+              }`}
+                disabled={!convertedImages}
+              >
+                Download
+              </button>
+
+            {/* Reset button */}
+            <button
+              onClick={handleReset}
+              className="rounded-full border border-transparent transition-colors flex items-center justify-center bg-red-500 text-white gap-2 hover:bg-red-600 dark:hover:bg-red-400 font-medium text-sm sm:text-base h-12 px-5 w-[150px]"
+            >
+              Reset
+            </button>
+          </>
+            );
+          })()}
       </div>
-
     </div>
   );
 };
