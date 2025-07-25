@@ -18,7 +18,12 @@
 'use client'
 
 import Image from "next/image";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Libre Converters - Free Suite of Online Converters",
+  description: "FREE & Open Source suite of online converters. No intrusive ads, no signups, no usage limits! Convert images, videos, audio, and documents to and from various formats.",
+};
 
 export default function Home() {
   return (

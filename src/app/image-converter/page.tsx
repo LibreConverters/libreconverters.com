@@ -22,6 +22,12 @@ import FileDropBox from "./FileDropBox";
 import dynamic from 'next/dynamic';
 const SettingsPanel = dynamic(() => import('./SettingsPanel'), { ssr: false });
 import OutputPane from "./OutputPane";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Free Image Converter",
+  description: "FREE & Open Source Image Converter. No intrusive ads, no signups, no usage limits! Convert images to and from JPEG, PNG, WebP, AVIF, JXL, QOI, HEIC, and WP2 formats.",
+};
 
 export default function Home() {
   return (
