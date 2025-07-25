@@ -18,8 +18,9 @@
 'use client'
 
 import Image from "next/image";
-import FileDropBox from "../FileDropBox";
-import SettingsPanel from "./SettingsPanel";
+import FileDropBox from "./FileDropBox";
+import dynamic from 'next/dynamic';
+const SettingsPanel = dynamic(() => import('./SettingsPanel'), { ssr: false });
 import OutputPane from "./OutputPane";
 
 export default function Home() {
@@ -84,9 +85,7 @@ export default function Home() {
                 <SettingsPanel />
             </div>
         </div>
-        
       </div>
-
     </div>
   );
 }
