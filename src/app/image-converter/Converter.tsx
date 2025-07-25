@@ -48,8 +48,8 @@ export async function convertImages(
         default: return null;
       }
     });
-
     // Load only the decoders needed for input formats
+    console.log('Loading decoders...');
     await Promise.all(
       Array.from(new Set(inputFormats.filter(Boolean))).map(fmt => {
         loadedDecoders.add(fmt!);
@@ -65,6 +65,7 @@ export async function convertImages(
 
     const convertedImages: { name: string; data: Uint8Array }[] = [];
 
+    
     await Promise.all(images.map(async (file) => {
       // **2.** Read file into a Uint8Array.
       const buffer = await file.arrayBuffer();
@@ -85,6 +86,7 @@ export async function convertImages(
       }
 
       // **4.** Decode to raw RGBA (ImageData):contentReference[oaicite:5]{index=5}.
+      console.log(`Decoding images...`);
       const imageData = inputCodec.decode(inputBytes);
 
       // **5.** Prepare encoding options per output format.
@@ -118,6 +120,7 @@ export async function convertImages(
       }
 
       // **6.** Encode with the selected icodec module and options.
+      console.log(`Encoding images...`);
       const outputCodec = modules[output_format];
       if (!outputCodec) throw new Error(`Unsupported format: ${output_format}`);
       const encodedBytes: Uint8Array = outputCodec.encode(imageData, options);
