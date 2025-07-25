@@ -79,7 +79,7 @@ const SettingsPanel = () => {
             processImages(
               compression,
               FileHandler.getInstance().getFiles(),
-              'avif'
+              (document.getElementById('outputFormat') as HTMLSelectElement)?.value
             ).then();
           }}
           className="rounded-full border border-transparent transition-colors flex items-center justify-center bg-blue-500 text-white gap-2 hover:bg-blue-600 dark:hover:bg-blue-400 font-medium text-sm sm:text-base h-12 px-5 w-[150px]"
