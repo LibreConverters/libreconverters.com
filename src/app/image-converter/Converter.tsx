@@ -140,7 +140,7 @@ async function encodeImage(imageData: ImageData, format: OutputFormat, compressi
   switch (format) {
     case "jpeg":
       codec = jpeg;
-      args = { quality: compression };
+      args = { quality: 100 - compression };
       break;
     case "png":
       codec = png;
