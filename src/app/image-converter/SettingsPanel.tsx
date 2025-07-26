@@ -44,29 +44,27 @@ const SettingsPanel = () => {
           </select>
         </div>
 
-        {/* Compression Settings */}
+        {/* Quality Settings */}
         <div className="flex flex-col gap-2 w-full">
-          <label className="text-sm font-semibold" htmlFor="compression">
-            Compression Settings
+          <label className="text-sm font-semibold" htmlFor="quality">
+            Quality Settings
           </label>
           <select
-            id="compression"
+            id="quality"
             className="bg-white text-black border border-gray-400 rounded px-2 py-1"
           >
-            <option value="0" selected>0 (Lossless)</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-            <option value="40">40</option>
-            <option value="50">50 (Standard)</option>
-            <option value="60">60</option>
-            <option value="70">70</option>
-            <option value="80">80</option>
-            <option value="90">90</option>
-            <option value="100">100 (Smallest File)</option>
+            <option value="100" selected>100% (Lossless)</option>
+            <option value="90">90%</option>
+            <option value="80">80%</option>
+            <option value="70">70%</option>
+            <option value="60">60%</option>
+            <option value="50">50%</option>
+            <option value="40">40%</option>
+            <option value="30">30%</option>
+            <option value="20">20%</option>
+            <option value="10">10% (Smallest File)</option>
           </select>
         </div>
-
       </div>
 
       {/* Buttons */}
@@ -92,11 +90,11 @@ const SettingsPanel = () => {
             setIsConverting(true);
             setConvertedImages(null);
 
-            const compression = Number((document.getElementById('compression') as HTMLSelectElement)?.value);
+            const quality = Number((document.getElementById('quality') as HTMLSelectElement)?.value);
             const outputFormat = (document.getElementById('outputFormat') as HTMLSelectElement)?.value as 'jpeg'|'png'|'webp'|'avif'|'jxl'|'qoi'|'heic'|'wp2';
 
             // processImages may be async, so handle both cases
-            const result = await Promise.resolve(processImages(compression, files, outputFormat));
+            const result = await Promise.resolve(processImages(quality, files, outputFormat));
             setConvertedImages(result);
             setIsConverting(false);
           };
