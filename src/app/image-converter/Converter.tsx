@@ -93,7 +93,7 @@ async function loadEncoders(formats: OutputFormat[]): Promise<void> {
 }
 
 async function decodeImage(file: File): Promise<ImageData> {
-  const ext = file.name.split('.').pop()?.toLowerCase() || "";
+  const ext = await getFileExtension(file);
   let codec: any;
 
   switch (ext) {
