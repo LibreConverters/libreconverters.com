@@ -132,7 +132,7 @@ async function decodeImage(file: File): Promise<ImageData> {
   return imageData;
 }
 
-async function encodeImage(imageData: ImageData, format: OutputFormat, compression: number): Promise<Uint8Array> {
+async function encodeImage(imageData: ImageData, format: OutputFormat, quality: number): Promise<Uint8Array> {
   let codec: any;
   let args: any = {};
 
@@ -140,41 +140,41 @@ async function encodeImage(imageData: ImageData, format: OutputFormat, compressi
   switch (format) {
     case "jpeg":
       codec = jpeg;
-      args = { quality: 100 - compression };
+      args = { quality: quality };
       break;
     case "png":
       codec = png;
-      args = { quality: compression };
+      args = { quality: quality };
       break;
     case "webp":
       codec = webp;
-      args = { quality: compression };
+      args = { quality: quality };
       break;
     case "avif":
       codec = avif;
-      args = { cqLevel: Math.round((100 - compression) / 5) };
+      args = { cqLevel: Math.round((100 - quality) / 5) };
       break;
     case "jxl":
       codec = jxl;
-      args = { quality: compression };
+      args = { quality: quality };
       break;
     case "qoi":
       codec = qoi;
-      args = { quality: compression };
+      args = { quality: quality };
       break;
     case "heic": 
       codec = heic;
-      args = { quality: compression };
+      args = { quality: quality };
       break;
     case "wp2":
       codec = wp2;
-      args = { quality: compression };
+      args = { quality: quality };
       break;
     default:
       throw new Error(`Unsupported output format: ${format}`);
   }
   
-  console.log(`Encoding image to ${format} with compression ${compression}`);
+  console.log(`Encoding image to ${format} with quality ${quality}`);
   const encoded = await codec.encode(imageData, args);
   
   if (encoded instanceof Uint8Array) {
@@ -199,16 +199,16 @@ export async function zipImages(images: { name: string; data: Uint8Array }[]): P
  * Converts and zips a list of images to a blob.
  *
  * This function wraps convertImages and zipImages. If the conversion fails
- * or the zipping fails, it returns null. The compression parameter is passed
+ * or the zipping fails, it returns null. The quality parameter is passed
  * to the underlying convertImages function.
  *
- * @param compression - Compression level (0-100) to pass to the underlying
+ * @param quality - quality level (0-100) to pass to the underlying
  *                      convertImages function.
  * @param images - List of images to convert.
  * @param output_format - Output format to convert to (e.g. "jpeg", "png", etc.).
  * @returns A blob containing the zipped images, or null if there was an error.
  */
-export async function processImages(compression: number, images: File[], output_format: OutputFormat): Promise<Blob | null> {
+export async function processImages(quality: number, images: File[], output_format: OutputFormat): Promise<Blob | null> {
   try {
     // Load decoders for input formats
     await loadDecoders(images);
@@ -220,7 +220,7 @@ export async function processImages(compression: number, images: File[], output_
     const convertedImages = await Promise.all(
       images.map(async (file) => {
         const imageData = await decodeImage(file);
-        const encodedData = await encodeImage(imageData, output_format, compression);
+        const encodedData = await encodeImage(imageData, output_format, quality);
         return { name: file.name.replace(/\.[^/.]+$/, `.${output_format}`), data: encodedData };
       })
     );
