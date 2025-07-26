@@ -105,7 +105,7 @@ const SettingsPanel = () => {
               const url = URL.createObjectURL(convertedImages);
               const a = document.createElement('a');
               a.href = url;
-              a.download = 'converted_images.zip';
+              a.download = 'converted-images.zip';
               document.body.appendChild(a);
               a.click();
               a.remove();
